@@ -23,6 +23,7 @@ import org.dromara.hmily.common.bean.context.HmilyTransactionContext;
 import org.dromara.hmily.core.concurrent.threadlocal.HmilyTransactionContextLocal;
 import org.dromara.hmily.core.interceptor.HmilyTransactionInterceptor;
 import org.dromara.hmily.core.service.HmilyTransactionAspectService;
+import org.dromara.hmily.core.mediator.RpcAcquire;
 import org.dromara.hmily.core.mediator.RpcMediator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -46,8 +47,16 @@ public class DubboHmilyTransactionInterceptor implements HmilyTransactionInterce
 
     @Override
     public Object interceptor(final ProceedingJoinPoint pjp) throws Throwable {
-        HmilyTransactionContext hmilyTransactionContext =
-                RpcMediator.getInstance().acquire(RpcContext.getContext()::getAttachment);
+        /*HmilyTransactionContext hmilyTransactionContext =
+                RpcMediator.getInstance().acquire(RpcContext.getContext()::getAttachment);*/
+    	HmilyTransactionContext hmilyTransactionContext =
+                RpcMediator.getInstance().acquire(new RpcAcquire() {					
+					@Override
+					public String acquire(String key) {
+						// TODO Auto-generated method stub
+						return RpcContext.getContext().getAttachment(key);
+					}
+				});
         if (Objects.isNull(hmilyTransactionContext)) {
             hmilyTransactionContext = HmilyTransactionContextLocal.getInstance().get();
         }

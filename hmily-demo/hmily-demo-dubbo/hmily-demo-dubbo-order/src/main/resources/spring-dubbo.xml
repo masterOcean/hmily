@@ -11,7 +11,7 @@
     <dubbo:application name="order_service"/>
 
 
-    <dubbo:registry protocol="zookeeper" address="tcc_order:2181"/>
+    <dubbo:registry protocol="zookeeper" address="49.235.98.213:2181"/>
 
     <dubbo:protocol name="dubbo" port="20886"
                     server="netty" client="netty"

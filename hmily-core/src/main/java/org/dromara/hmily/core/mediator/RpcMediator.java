@@ -51,6 +51,7 @@ public class RpcMediator {
      * @param context     the context
      */
     public void transmit(final RpcTransmit rpcTransmit, final HmilyTransactionContext context) {
+    	System.out.println("==============111111111111111111111==========================");
         if (Objects.nonNull(context)) {
             if (context.getRole() == HmilyRoleEnum.LOCAL.getCode()) {
                 context.setRole(HmilyRoleEnum.INLINE.getCode());

@@ -17,13 +17,17 @@
 
 package org.dromara.hmily.core.coordinator.impl;
 
+import org.dromara.hmily.common.utils.LogUtil;
 import org.dromara.hmily.common.utils.StringUtils;
 import org.dromara.hmily.common.bean.entity.HmilyTransaction;
 import org.dromara.hmily.common.config.HmilyConfig;
 import org.dromara.hmily.core.coordinator.HmilyCoordinatorService;
 import org.dromara.hmily.core.helper.SpringBeanUtils;
 import org.dromara.hmily.core.service.HmilyApplicationService;
+import org.dromara.hmily.core.service.executor.HmilyTransactionExecutor;
 import org.dromara.hmily.core.spi.HmilyCoordinatorRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +38,8 @@ import org.springframework.stereotype.Service;
  */
 @Service("hmilyCoordinatorService")
 public class HmilyCoordinatorServiceImpl implements HmilyCoordinatorService {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(HmilyCoordinatorServiceImpl.class);
 
     private HmilyCoordinatorRepository coordinatorRepository;
 
@@ -53,6 +59,7 @@ public class HmilyCoordinatorServiceImpl implements HmilyCoordinatorService {
 
     @Override
     public String save(final HmilyTransaction hmilyTransaction) {
+    	LOGGER.info("Thread="+Thread.currentThread().getName()+",save hmilyTransaction="+hmilyTransaction.getTransId());
         final int rows = coordinatorRepository.create(hmilyTransaction);
         if (rows > 0) {
             return hmilyTransaction.getTransId();
@@ -62,26 +69,32 @@ public class HmilyCoordinatorServiceImpl implements HmilyCoordinatorService {
 
     @Override
     public HmilyTransaction findByTransId(final String transId) {
+    	LOGGER.info("Thread="+Thread.currentThread().getName()+",find hmilyTransaction="+transId);
+
         return coordinatorRepository.findById(transId);
     }
 
     @Override
     public boolean remove(final String id) {
+    	LOGGER.info("Thread="+Thread.currentThread().getName()+",remove hmilyTransaction="+id);
         return coordinatorRepository.remove(id) > 0;
     }
 
     @Override
     public void update(final HmilyTransaction hmilyTransaction) {
+    	LOGGER.info("Thread="+Thread.currentThread().getName()+",update hmilyTransaction="+hmilyTransaction.getTransId());
         coordinatorRepository.update(hmilyTransaction);
     }
 
     @Override
     public int updateParticipant(final HmilyTransaction hmilyTransaction) {
+    	LOGGER.info("Thread="+Thread.currentThread().getName()+",updateParticipant hmilyTransaction="+hmilyTransaction.getTransId());
         return coordinatorRepository.updateParticipant(hmilyTransaction);
     }
 
     @Override
     public int updateStatus(final String id, final Integer status) {
+    	LOGGER.info("Thread="+Thread.currentThread().getName()+",updateStatus hmilyTransaction="+id);
         return coordinatorRepository.updateStatus(id, status);
     }
 

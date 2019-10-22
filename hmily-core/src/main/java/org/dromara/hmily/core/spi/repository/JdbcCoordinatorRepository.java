@@ -88,6 +88,7 @@ public class JdbcCoordinatorRepository implements HmilyCoordinatorRepository {
         String sql = "insert into " + tableName + "(trans_id,target_class,target_method,retried_count,"
                 + "create_time,last_time,version,status,invocation,role,pattern,confirm_method,cancel_method)"
                 + " values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        LOGGER.info(sql);
         try {
             final byte[] serialize = serializer.serialize(hmilyTransaction.getHmilyParticipants());
             return executeUpdate(sql, hmilyTransaction.getTransId(), hmilyTransaction.getTargetClass(), hmilyTransaction.getTargetMethod(),
