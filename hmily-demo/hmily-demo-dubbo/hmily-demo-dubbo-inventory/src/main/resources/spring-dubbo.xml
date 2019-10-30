@@ -19,7 +19,7 @@
 
 
     <dubbo:service interface="org.dromara.hmily.demo.dubbo.inventory.api.service.InventoryService"
-                   ref="inventoryService" executes="20"/>
+                   ref="inventoryService" executes="5"/>
 
 
 </beans>

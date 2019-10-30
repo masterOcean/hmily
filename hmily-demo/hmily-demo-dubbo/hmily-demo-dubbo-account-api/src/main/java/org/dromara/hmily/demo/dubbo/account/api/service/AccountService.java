@@ -35,7 +35,7 @@ public interface AccountService {
      * @param accountDTO 参数dto
      * @return true
      */
-    @Hmily
+    //@Hmily
     void payment(AccountDTO accountDTO);
 
     boolean testPayment(AccountDTO accountDTO);

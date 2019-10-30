@@ -78,9 +78,16 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    @Hmily(confirmMethod = "confirm", cancelMethod = "cancel")
+   // @Hmily(confirmMethod = "confirm", cancelMethod = "cancel")
     public void payment(AccountDTO accountDTO) {
-        accountMapper.update(accountDTO);
+    	//验证限流导致的服务降级
+    	try {
+			Thread.currentThread().sleep(10*1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       // accountMapper.update(accountDTO);
         /*final int i = trycount.incrementAndGet();
         System.out.println("调用了account try " + i + " 次");*/
 

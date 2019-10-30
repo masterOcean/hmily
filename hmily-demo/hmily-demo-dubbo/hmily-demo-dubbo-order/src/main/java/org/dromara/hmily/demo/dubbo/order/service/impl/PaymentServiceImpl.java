@@ -64,7 +64,7 @@ public class PaymentServiceImpl implements PaymentService {
 
 
     @Override
-    @Hmily(confirmMethod = "confirmOrderStatus", cancelMethod = "cancelOrderStatus")
+   // @Hmily(confirmMethod = "confirmOrderStatus", cancelMethod = "cancelOrderStatus")
     public void makePayment(Order order) {
         order.setStatus(OrderStatusEnum.PAYING.getCode());
         orderMapper.update(order);
@@ -84,10 +84,10 @@ public class PaymentServiceImpl implements PaymentService {
         accountDTO.setUserId(order.getUserId());
         accountService.payment(accountDTO);
         //进入扣减库存操作
-        InventoryDTO inventoryDTO = new InventoryDTO();
+        /*InventoryDTO inventoryDTO = new InventoryDTO();
         inventoryDTO.setCount(order.getCount());
         inventoryDTO.setProductId(order.getProductId());
-        inventoryService.decrease(inventoryDTO);
+        inventoryService.decrease(inventoryDTO);*/
     }
 
     @Override

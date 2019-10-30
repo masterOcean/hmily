@@ -13,9 +13,9 @@ org:
     dromara:
          hmily :
             serializer : kryo
-            recoverDelayTime : 128
+            recoverDelayTime : 1000
             retryMax : 30
-            scheduledDelay : 128
+            scheduledDelay : 1000
             scheduledThreadMax :  10
             repositorySupport : db
             started: false

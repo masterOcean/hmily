@@ -21,9 +21,11 @@
     <dubbo:reference timeout="50000"
                      interface="org.dromara.hmily.demo.dubbo.inventory.api.service.InventoryService"
                      id="inventoryService"
-                     retries="0" check="false" actives="20" loadbalance="hmily"/>
+                     retries="0" check="false" actives="20" loadbalance="hmily" cluster="failover"
+                     />
     <dubbo:reference timeout="50000"
                      interface="org.dromara.hmily.demo.dubbo.account.api.service.AccountService"
                      id="accountService"
-                     retries="0" check="false" actives="20" loadbalance="hmily"/>
+                     retries="0" check="false" actives="20" loadbalance="hmily" cluster="failover"
+                     mock="org.dromara.hmily.demo.dubbo.order.test.TestAccountMock" />
 </beans>

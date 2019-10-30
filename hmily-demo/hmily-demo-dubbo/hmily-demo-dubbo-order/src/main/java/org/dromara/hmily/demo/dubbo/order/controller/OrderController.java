@@ -43,7 +43,7 @@ public class OrderController {
     }
 
 
-    @PostMapping(value = "/orderPay")
+    @RequestMapping(value = "/orderPay")
     @ApiOperation(value = "订单支付接口（注意这里模拟的是创建订单并进行支付扣减库存等操作）")
     public String orderPay(@RequestParam(value = "count") Integer count,
                            @RequestParam(value = "amount") BigDecimal amount) {
