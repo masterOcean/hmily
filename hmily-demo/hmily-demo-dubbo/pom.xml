@@ -36,6 +36,7 @@
         <module>hmily-demo-dubbo-account-api</module>
         <module>hmily-demo-dubbo-inventory-api</module>
         <module>hmily-demo-dubbo-inventory</module>
+		<module>atokimos-demo-single-service</module>
     </modules>
 
     <properties>
