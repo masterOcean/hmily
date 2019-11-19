@@ -14,7 +14,9 @@ public class NioServer {
 	public static Integer Port = 18080;
 	private Selector selector= null;
 	public static void main(String[] args) {
-		
+		NioServer s = new NioServer();
+		s.init();
+		s.run();
 	}
 	
 	public void init() {
@@ -37,6 +39,7 @@ public class NioServer {
 	public void run() {
 		while(true) {
 			try {
+				System.out.println("==== select");
 				selector.select();
 				Set keys = selector.selectedKeys();
 				Iterator<SelectionKey> it = keys.iterator();
@@ -47,7 +50,8 @@ public class NioServer {
 						it.remove();
 					}else if(key.isReadable()) {
 					//处理read
-						
+						System.out.println("doRead");
+						doRead(key);
 					}
 				}
 			} catch (IOException e) {
@@ -71,23 +75,28 @@ public class NioServer {
 		}
 	}
 	
-	public void doRead(SelectionKey key) {//处理只读
+	public StringBuilder doRead(SelectionKey key) {//处理只读
 		SocketChannel sc = (SocketChannel) key.channel();
 		ByteBuffer bb = ByteBuffer.allocate(128);
+		StringBuilder sb = new StringBuilder();
 		Integer len;
 		try {
 			len = sc.read(bb);
 			while(len>0) {
 				bb.flip();
 				byte[] data = bb.array();
+				sb.append(data);
 				System.out.println(new String(data));
 				bb.clear();
 				len = sc.read(bb);
 			}
+			//设置为可读
+			sc.register(this.selector, SelectionKey.OP_READ);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
-		
+		}
+		return sb;		
 	}
+	
 }
